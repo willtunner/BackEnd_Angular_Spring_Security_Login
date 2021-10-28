@@ -1,12 +1,14 @@
 package com.backend.backend.service.implementation;
 
 import com.backend.backend.models.Role;
+import com.backend.backend.models.Server;
 import com.backend.backend.models.User;
 import com.backend.backend.repositories.RoleRepo;
 import com.backend.backend.repositories.UserRepo;
 import com.backend.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -76,6 +78,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsers() {
         log.info("Fetching all users");
         return userRepo.findAll();
+    }
+
+    @Override
+    public Collection<User> list(int limit) {
+        log.info( "Listando todos os servers!" );
+        return userRepo.findAll(PageRequest.of(0, limit)).toList();// cria paginação
     }
 
 

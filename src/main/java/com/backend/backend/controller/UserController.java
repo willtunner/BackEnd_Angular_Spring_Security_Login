@@ -24,12 +24,13 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api")
@@ -39,9 +40,24 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/users")
-    public ResponseEntity<List<User>>getUsers() {
-        return ResponseEntity.ok().body(userService.getUsers());
+//    @GetMapping("/users")
+//    public ResponseEntity<List<User>>getUsers() throws InterruptedException {
+//        return ResponseEntity.ok().body(userService.getUsers());
+//    }
+
+    @GetMapping("/list")
+    public ResponseEntity<Response> getUsers() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(now())
+                        .data(Map.of("users", userService.list(30)))
+                        .message("Usuarios recuperados")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
     }
 
 //    @PostMapping("/user/save")
