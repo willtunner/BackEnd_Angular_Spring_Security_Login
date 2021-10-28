@@ -1,6 +1,8 @@
 package com.backend.backend.controller;
 
+import com.backend.backend.models.Response;
 import com.backend.backend.models.Role;
+import com.backend.backend.models.Server;
 import com.backend.backend.models.User;
 import com.backend.backend.service.UserService;
 import com.auth0.jwt.JWT;
@@ -18,12 +20,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RestController
@@ -39,11 +44,25 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @PostMapping("/user/save")
-    public ResponseEntity<User>saveUser(@RequestBody User user) {
-        //return ResponseEntity.ok().body(userService.saveUser(user));
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+//    @PostMapping("/user/save")
+//    public ResponseEntity<User>saveUser(@RequestBody User user) {
+//        //return ResponseEntity.ok().body(userService.saveUser(user));
+//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/user/save").toUriString());
+//        return ResponseEntity.created(uri).body(userService.saveUser(user));
+//    }
+
+    @PostMapping("/save")
+    public ResponseEntity<Response> saveServer(@RequestBody @Valid User user){
+
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(now())
+                        .data(Map.of("user", userService.saveUser(user)))
+                        .message("user criado!")
+                        .status(CREATED)
+                        .statusCode(CREATED.value())
+                        .build()
+        );
     }
 
     @PostMapping("/role/save")

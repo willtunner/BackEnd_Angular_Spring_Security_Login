@@ -46,11 +46,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         //String username = request.getParameter("username");
 //        String password = request.getParameter("password");
-//        log.info("Username is: {}", username);
-//        log.info("Password is: {}", password);
-//        log.info("Roles is: {}", request);
 
         Credentials credentials = new ObjectMapper().readValue(request.getInputStream(), Credentials.class); // Converte requesições obj(vindo do front) para java class(backend)
+
+        log.info("Username is: {}", credentials.getUsername());
+        log.info("Password is: {}", credentials.getPassword());
+        log.info("Roles is: {}", request);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
         return authenticationManager.authenticate(authenticationToken);
     }

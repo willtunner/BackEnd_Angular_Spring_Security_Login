@@ -1,4 +1,4 @@
-package com.ms.email.enums;
+package com.backend.backend.enuns;
 
 public enum StatusEmail {
     WAITING,

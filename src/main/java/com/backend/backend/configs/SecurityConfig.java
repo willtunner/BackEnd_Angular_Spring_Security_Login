@@ -61,7 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //TODO: Não bloqueia certas pastas  no security
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/style/**", "/api/user/save/**", "/server/save", "/css/**", "/js/**", "server/**", "api/login");
+        web.ignoring().antMatchers("/style/**", "/css/**", "/js/**", "/server/list/**", "/server/image/**", "/server/ping/**", "/server/save", "/api/save");
+        //web.ignoring().antMatchers("/style/**", "/css/**", "/js/**");
     }
 }
 
@@ -69,3 +70,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 // refs:
 // https://www.youtube.com/watch?v=mYKf4pufQWA&t=4912s&ab_channel=GetArrays
 // https://github.dev/getarrays/userservice
+// https://www.youtube.com/watch?v=1zCvBCqmUuo&t=7094s&ab_channel=GetArrays

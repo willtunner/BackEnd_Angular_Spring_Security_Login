@@ -1,5 +1,6 @@
 package com.backend.backend.models;
 
+import com.backend.backend.enuns.TypesEmail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    //public TypesEmail typesEmail = TypesEmail.WELCOME;
     @ManyToMany(fetch = EAGER)
     private Collection<Role> roles = new ArrayList<>();
 }
